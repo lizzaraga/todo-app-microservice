@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"] ??
                                                                                throw new ArgumentNullException(
-                                                                                   $"Jwt Secret not found in configuration")))
+                                                                                   null, "Jwt Secret not found in configuration")))
         };
     });
 
