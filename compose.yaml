@@ -1,0 +1,6 @@
+﻿services:
+  simpletodo.api:
+    image: simpletodo.api
+    build:
+      context: .
+      dockerfile: SimpleTodo.Api/Dockerfile
