@@ -19,4 +19,6 @@
     &lt;TestId&gt;xUnit::B7B4B3C4-4768-4619-901A-8847FE2FED16::net8.0::SimpleTodo.Tests.UnitTests.TodoItemTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::B7B4B3C4-4768-4619-901A-8847FE2FED16::net8.0::SimpleTodo.Tests.IntegrationTests.TodoControllerTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	
+	</wpf:ResourceDictionary>

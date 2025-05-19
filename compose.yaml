@@ -1,6 +1,30 @@
 ﻿services:
-  simpletodo.api:
-    image: simpletodo.api
+  auth-service:
+    container_name: auth-service
     build:
-      context: .
-      dockerfile: SimpleTodo.Api/Dockerfile
+      context: ./AuthService
+    ports:
+      - 5001:8080
+    volumes:
+      - ./LocalDb:/app/LocalDb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - todo-network
+  todo-service:
+    container_name: todo-service
+    build:
+      context: ./TodoService
+    ports:
+      - 5002:8080
+    volumes:
+      - ./LocalDb:/app/LocalDb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - todo-network
+    depends_on:
+      - auth-service
+networks:
+  todo-network:
+    driver: bridge
