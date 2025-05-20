@@ -6,3 +6,4 @@ riderModule.iml
 **/bin
 **/obj
 ./LocalDb
+.idea
