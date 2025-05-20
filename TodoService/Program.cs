@@ -1,4 +1,5 @@
 using System.Text;
+using Consul;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,6 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<ITodoService, TodoService.Services.TodoService>();
-
 builder.Services.AddDbContext<TodoDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("TodoDb") ?? "Data Source=./LocalDb/inner-todo.db"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -39,7 +39,39 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var consulClient = new ConsulClient(config =>
+{
+    config.Address = new Uri(builder.Configuration.GetValue<string>("Consul:Address") ??
+                             throw new ArgumentNullException(null, "Consul Address not found in configuration"));
+});
+
+var agentServiceRegistration = new AgentServiceRegistration()
+{
+    ID = $"todo-service-{Guid.NewGuid()}",
+    Name = "todo-service",
+    Address = "todo-service",
+    Port = 8080,
+    Check = new AgentServiceCheck()
+    {
+        DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(10),
+        Interval = TimeSpan.FromSeconds(10),
+        HTTP = "http://todo-service:8080/health"
+    }
+};
+
 var app = builder.Build();
+
+app.MapGet(("/health"), () => new { Message = "Healthy" });
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    consulClient.Agent.ServiceRegister(agentServiceRegistration).Wait();
+    Console.WriteLine("Service registered");
+});
+app.Lifetime.ApplicationStopping.Register(() =>
+{
+    consulClient.Agent.ServiceDeregister(agentServiceRegistration.ID).Wait();
+    Console.WriteLine("Service deregistered");
+});
 
 using (var scope = app.Services.CreateScope())
 {

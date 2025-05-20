@@ -1,4 +1,11 @@
 ﻿services:
+  consult:
+    container_name: consul
+    image: hashicorp/consul
+    ports:
+      - "8500:8500"
+    networks:
+      - todo-network
   auth-service:
     container_name: auth-service
     build:
@@ -7,6 +14,8 @@
       - ./LocalDb:/app/LocalDb
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - consult
     networks:
       - todo-network
   todo-service:
@@ -20,7 +29,7 @@
     networks:
       - todo-network
     depends_on:
-      - auth-service
+      - consult
   api-gateway:
     container_name: api-gateway
     build:
