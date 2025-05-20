@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoService", "TodoService\TodoService.csproj", "{5F1AB432-14C5-44E5-8348-E57CDD8A77FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{81501B63-E686-4CBD-A10D-0D4F4DA49B28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{5F1AB432-14C5-44E5-8348-E57CDD8A77FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F1AB432-14C5-44E5-8348-E57CDD8A77FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F1AB432-14C5-44E5-8348-E57CDD8A77FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81501B63-E686-4CBD-A10D-0D4F4DA49B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81501B63-E686-4CBD-A10D-0D4F4DA49B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81501B63-E686-4CBD-A10D-0D4F4DA49B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81501B63-E686-4CBD-A10D-0D4F4DA49B28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

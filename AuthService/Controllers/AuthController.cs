@@ -20,4 +20,10 @@ public class AuthController(IAuthService authService): ControllerBase
         await authService.Register(dto);
         return Ok();
     }
+
+    [HttpGet("test")]
+    public async Task<ActionResult> Test()
+    {
+        return Ok("Hello");
+    }
 }
